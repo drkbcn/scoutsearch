@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use JeroenG\Explorer\Application\Explored;
 
-class Product extends Model
+class Product extends Model implements Explored
 {
     use HasFactory;
     use Searchable;
@@ -27,4 +28,15 @@ class Product extends Model
         'depth',
         'active',
     ];
+
+    public function mappableAs(): array
+    {
+        return [
+            'id' => 'keyword',
+            'name' => 'text',
+            'short_description' => 'text',
+            'description' => 'text',
+            'active' => 'boolean'
+        ];
+    }
 }
